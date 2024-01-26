@@ -16,5 +16,13 @@
         "question": "What are the primary colors?",
         "choices": ["Red", "Green", "Blue", "Yellow"],
         "correct_answers": ["Red", "Blue", "Yellow"]
+    },
+    {
+        "question_id": 4,
+        "question": "Snowflake provides a mechanism for its customers to override its natural clustering algorithms. This method is:",
+        "choices": ["Micro-partitions", "Clustering keys", "Key partitions", "Clustered partitions"],
+        "correct_answers": ["Clustering keys"]
+        
     }
+
 ]
