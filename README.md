@@ -9,7 +9,8 @@ CREATE TABLE quiz_log (
     user_answers TEXT,
     correct_answers TEXT,
     is_correct BOOLEAN,
-    answer_time DATETIME
+    answer_time DATETIME,
+    last_modified_time DATETIME
 );
 ```
   ```sql

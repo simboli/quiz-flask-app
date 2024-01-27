@@ -20,20 +20,24 @@
                             <h4>MCQ Quiz</h4><span>1 of 12</span>
                         </div>
                         <form method="POST" action="/submit">
-                        {% for question in questions %}
+                            {% for question in questions %}
                     </div>
-                    <div class="question bg-white p-3 border-bottom">
+                    <div class="question bg-white p-3 border-bottom" id="{{ question['question_id'] }}">
                         <div class="d-flex flex-row align-items-center question-title">
                             <h3 class="text-danger">Q.</h3>
                             <h5 class="mt-1 ml-2">{{ question['question'] }}</h5>
                         </div>
                         <div class="ans ml-2">
                             {% for choice in question['choices'] %}
-                            <label class="radio"> <input type="checkbox" class="form-check-input" name="{{ question['question'] }}"
-                                value="{{ choice }}" id="{{ choice }}"> <span>{{ choice }}</span>
+                            <label class="radio"> <input type="checkbox" class="form-check-input"
+                                    name="{{ question['question'] }}" value="{{ choice }}" id="{{ choice }}"> <span>{{
+                                    choice }}</span>
                             </label>
-                            {% endfor %}</div>
-                            {% endfor %}</div>
+                            {% endfor %}
+                        </div>
+                        <input type="hidden" name="last_modified_{{ question['question_id'] }}" id="last_modified_{{ question['question_id'] }}" value="{{ current_timestamp }}">
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,6 +46,32 @@
         </div>
         </form>
     </div>
+
+<!-- Update the JavaScript code in your HTML template -->
+<script>
+    $(document).ready(function () {
+        $("input[type='checkbox']").change(function () {
+            // Find the closest question div to the changed checkbox
+            var questionDiv = $(this).closest('.question');
+
+            // Get the question ID from the question div
+            var questionId = questionDiv.attr('id');
+
+            // Find the hidden input field for last_modified_time
+            var lastModifiedField = $("#last_modified_" + questionId);
+
+            // Update the last modified timestamp for this question
+            var now = new Date().toISOString().slice(0, 19).replace('T', ' ')
+            lastModifiedField.val(now);
+
+        });
+
+        $("#submit-button").click(function () {
+            $("#quiz-form").submit();
+        });
+    });
+</script>
+
 </body>
 
 </html>
