@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 import json
 import random
 import pymysql
-from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -37,7 +36,6 @@ def index():
     selected_questions = select_random_questions(questions, num_questions=2)
     session['current_questions'] = selected_questions
     session['session_id'] = generate_session_id()  # Generate a session ID
-    session['page_load_time'] = datetime.now()  # Store the page load time
     return render_template('index.html', questions=selected_questions)
 
 # Function to generate a unique session ID
@@ -52,12 +50,6 @@ def submit():
     selected_questions = session.get('current_questions', [])
 
     cursor = mysql.cursor()
-
-    # Save the session information to the database
-    cursor.execute(
-        "INSERT INTO session_info (session_id, page_load_time, submission_time) VALUES (%s, %s, %s)",
-        (session.get('session_id'), session.get('page_load_time'), datetime.now())
-    )
 
     for question in selected_questions:
         user_answers = request.form.getlist(question['question'])

@@ -1,3 +1,6 @@
+Certainly! You can add code to save the datetime when the question page is loaded into the `session_info` table. Here's the modified `app.py` code:
+
+```python
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import json
 import random
@@ -9,9 +12,9 @@ app.secret_key = 'your_secret_key'
 
 # Configure the MySQL database connection
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'mysql'
-app.config['MYSQL_DB'] = 'quiz-app'
+app.config['MYSQL_USER'] = 'username'
+app.config['MYSQL_PASSWORD'] = 'password'
+app.config['MYSQL_DB'] = 'quiz_db'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 # Create a MySQL database connection
@@ -89,3 +92,11 @@ def submit():
 
 if __name__ == '__main__':
     app.run(debug=True)
+```
+
+In this updated code:
+
+- We store the page load time in the `page_load_time` session variable when the user visits the question page.
+- When the user submits the form, we save both the `page_load_time` and the current datetime to the `session_info` table.
+
+This way, you can track when the user loaded the question page and when they submitted the form in the database.

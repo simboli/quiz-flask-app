@@ -11,3 +11,10 @@ CREATE TABLE `quiz_log` (
   `is_correct` tinyint(1) DEFAULT NULL,
 );
 ```
+  ```sql
+   CREATE TABLE session_info (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       session_id VARCHAR(255),
+       submission_time DATETIME
+   );
+   ```
