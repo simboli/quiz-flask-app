@@ -1,3 +1,6 @@
+Certainly! You can modify the script to include the datetime when the user filled each question in the `quiz_log` table. Here's the updated `app.py` code:
+
+```python
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import json
 import random
@@ -9,9 +12,9 @@ app.secret_key = 'your_secret_key'
 
 # Configure the MySQL database connection
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'mysql'
-app.config['MYSQL_DB'] = 'quiz-app'
+app.config['MYSQL_USER'] = 'username'
+app.config['MYSQL_PASSWORD'] = 'password'
+app.config['MYSQL_DB'] = 'quiz_db'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 # Create a MySQL database connection
@@ -89,3 +92,11 @@ def submit():
 
 if __name__ == '__main__':
     app.run(debug=True)
+```
+
+In this updated code:
+
+- We modified the `quiz_log` table INSERT statement to include the `answer_time` column, which records the datetime when the user answered each question.
+- When saving quiz log entries, we now include the `answer_time` in the INSERT statement, which records the datetime for each individual question.
+
+This way, you can track when each user answered each question in the `quiz_log` table.
