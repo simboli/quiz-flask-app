@@ -63,26 +63,23 @@ def submit():
         user_answers = request.form.getlist(question['question'])
         correct_answers = question['correct_answers']
         
-        for answer in user_answers:
-            # Save the quiz log for each selected answer with timestamp
-            cursor.execute(
-                "INSERT INTO quiz_log (session_id, question_id, question, user_answers, correct_answers, is_correct, answer_time, last_modified_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                (session.get('session_id'), question['question_id'], question['question'], ', '.join(user_answers), ', '.join(correct_answers), is_correct, datetime.now(), request.form.get("last_modified_" + str(question['question_id'])))
-            )
-            cursor.execute(
-                "INSERT INTO quiz_log (session_id, question_id, question, user_answers, correct_answers, is_correct, answer_time, last_modified_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                (session.get('session_id'), question['question_id'], question['question'], answer, answer, answer in correct_answers, datetime.now(), request.form.get("last_modified_" + str(question['question_id'])))
-            )
->>>>>>>>>>>>>>>>>>>>>>>>>>>> FINIRE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        is_correct = set(user_answers) == set(correct_answers) and len(user_answers) == len(correct_answers)  # Calculate correctness here
+        
+        # Save the quiz log for each selected answer with timestamp
+        cursor.execute(
+            "INSERT INTO quiz_log (session_id, question_id, question, user_answers, correct_answers, is_correct, answer_time, last_modified_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+            (session.get('session_id'), question['question_id'], question['question'], ', '.join(user_answers), ', '.join(correct_answers), is_correct, datetime.now(), request.form.get("last_modified_" + str(question['question_id'])))
+        )
+
         results.append({
             'question_id': question['question_id'],
             'question': question['question'],
             'user_answers': user_answers,
             'correct_answers': correct_answers,
-            'is_correct': set(user_answers) == set(correct_answers) and len(user_answers) == len(correct_answers),
+            'is_correct': is_correct,  # Assign is_correct to each question
         })
 
-        if set(user_answers) == set(correct_answers) and len(user_answers) == len(correct_answers):
+        if is_correct:
             score += 1
 
     # Commit the changes to the database
