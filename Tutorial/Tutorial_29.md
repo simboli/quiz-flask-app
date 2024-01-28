@@ -1,50 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
-import json
-import random
-import pymysql
-from datetime import datetime
+To include the question number in the `quiz_log` table, you can modify the code as follows:
 
-app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+1. Add a variable to keep track of the question number.
+2. Increment the question number for each question in the loop.
+3. Include the question number when inserting data into the `quiz_log` table.
 
-# Configure the MySQL database connection
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'mysql'
-app.config['MYSQL_DB'] = 'quiz-app'
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+Here's the modified `app.py` script with these changes:
 
-# Create a MySQL database connection
-mysql = pymysql.connect(
-    host=app.config['MYSQL_HOST'],
-    user=app.config['MYSQL_USER'],
-    password=app.config['MYSQL_PASSWORD'],
-    db=app.config['MYSQL_DB'],
-    cursorclass=pymysql.cursors.DictCursor
-)
-
-# Load questions from JSON file
-with open('questions.json', 'r') as file:
-    questions = json.load(file)
-
-# Function to select 2 random questions
-def select_random_questions(questions_list, num_questions=2):
-    return random.sample(questions_list, num_questions)
-
-@app.route('/')
-def index():
-    # Select 2 random questions
-    selected_questions = select_random_questions(questions, num_questions=2)
-    session['current_questions'] = selected_questions
-    session['session_id'] = generate_session_id()  # Generate a session ID
-    session['page_load_time'] = datetime.now()  # Store the page load time
-    return render_template('index.html', questions=selected_questions)
-
-# Function to generate a unique session ID
-def generate_session_id():
-    import uuid
-    return str(uuid.uuid4())
-
+```python
 @app.route('/submit', methods=['POST'])
 def submit():
     score = 0
@@ -90,6 +52,12 @@ def submit():
     cursor.close()
 
     return render_template('result.html', score=score, total=len(selected_questions), results=results, selected_questions=selected_questions)
+```
 
-if __name__ == '__main__':
-    app.run(debug=True)
+In this code:
+
+- We initialize `question_number` to 1 before the loop.
+- Inside the loop, we include `question_number` when inserting data into the `quiz_log` table, which represents the number of the question in the quiz.
+- After processing each question, we increment `question_number` to move on to the next question.
+
+This modification will include the question number in the `quiz_log` table for each question, starting from 1 for the first question and incrementing for each subsequent question.
