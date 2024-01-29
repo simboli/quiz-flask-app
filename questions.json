@@ -23,6 +23,13 @@
         "choices": ["Micro-partitions", "Clustering keys", "Key partitions", "Clustered partitions"],
         "correct_answers": ["Clustering keys"]
         
+    },
+    {
+        "question_id": 5,
+        "question": "Which are the best animals in the world?",
+        "choices": ["Cats", "Dogs", "Mouses"],
+        "correct_answers": ["Cats"]
+        
     }
 
 ]

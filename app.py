@@ -47,7 +47,7 @@ def index():
     with open('quiz_parameters.json', 'r') as params_file:
         params = json.load(params_file)
         num_questions = params.get('num_questions', 2)  # Default to 2 questions if not specified
-        
+
     # Pass the num_questions variable to the template
     return render_template('index.html', questions=selected_questions, num_questions=num_questions)
 
@@ -78,14 +78,23 @@ def submit():
     for question in selected_questions:
         user_answers = request.form.getlist(question['question'])
         correct_answers = question['correct_answers']
-        
-        is_correct = set(user_answers) == set(correct_answers) and len(user_answers) == len(correct_answers)  # Calculate correctness here
-        
+
+        is_correct = set(user_answers) == set(correct_answers) and len(user_answers) == len(correct_answers)
+
+        # Ensure that both timestamps are either valid datetimes or None
+        if request.form.get("first_modified_" + str(question['question_id'])) == '':
+            first_modified_time = None
+        else:
+            first_modified_time = request.form.get("first_modified_" + str(question['question_id']))
+
+        if request.form.get("last_modified_" + str(question['question_id'])) == '':
+            last_modified_time = None
+        else:
+            last_modified_time = request.form.get("last_modified_" + str(question['question_id']))
+
         # Save the quiz log for each selected answer with timestamp
-        cursor.execute(
-            "INSERT INTO quiz_log (session_id, question_number, question_id, question, user_answers, correct_answers, is_correct, first_modified_time, last_modified_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (session.get('session_id'), question_number, question['question_id'], question['question'], '| '.join(user_answers), '| '.join(correct_answers), is_correct, request.form.get("first_modified_" + str(question['question_id'])), request.form.get("last_modified_" + str(question['question_id'])))
-        )
+        query = '''INSERT INTO quiz_log (session_id, question_number, question_id, question, user_answers, correct_answers, is_correct, first_modified_time, last_modified_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+        cursor.execute(query, (session.get('session_id'), question_number, question['question_id'], question['question'], '| '.join(user_answers), '| '.join(correct_answers), is_correct, first_modified_time, last_modified_time))
 
         results.append({
             'question_id': question['question_id'],

@@ -1,4 +1,3 @@
-<!-- Update the index.html template -->
 <!DOCTYPE html>
 <html>
 
@@ -12,48 +11,52 @@
 </head>
 
 <body>
-    <div class="container mt-5">
-        <div class="d-flex justify-content-center row">
-            <div class="col-md-10 col-lg-10">
-                <div class="border">
-                    <div class="question bg-white p-3 border-bottom">
-                        <div class="d-flex flex-row justify-content-between align-items-center mcq">
-                            <h4>MCQ Quiz</h4>
-                            <span>{{ num_questions }} questions</span> <!-- Display total number of questions here -->
-                        </div>
-                        <form method="POST" action="/submit">
-                            {% for question in questions %}
-                    </div>
-                    <div class="question bg-white p-3 border-bottom" id="{{ question['question_id'] }}">
-                        <div class="d-flex flex-row align-items-center question-title">
-                            <h3 class="text-danger">Q.</h3>
-                            <h5 class="mt-1 ml-2">{{ question['question'] }}</h5>
-                        </div>
-                        <div class="ans ml-2">
+    <div class="container">
+        <h1 class="mt-5" aria-label="Quiz Results">Quiz Result</h1>
+        <div class="result-summary">
+            <h2 aria-label="Number-questions">This test has {{ num_questions }} questions</h2>
+        </div>
+        <h3 aria-label="Questions">Questions:</h3>
+
+        <form method="POST" action="/submit">
+            {% for question in questions %}
+            <ul class="list-group mt-3">
+                <li class="list-group-item question-item">
+                    <p class="question-text">{{ question['question'] }}</p>
+                    <div class="question" id="{{ question['question_id'] }}">
+                        <input type="hidden" name="first_modified_{{ question['question_id'] }}"
+                            id="first_modified_{{ question['question_id'] }}" value="{{ current_timestamp }}">
+                        <input type="hidden" name="last_modified_{{ question['question_id'] }}"
+                            id="last_modified_{{ question['question_id'] }}" value="{{ current_timestamp }}">
+                        <ul class="answer-list">
                             {% for choice in question['choices'] %}
-                            <label class="radio"> <input type="checkbox" class="form-check-input"
-                                    name="{{ question['question'] }}" value="{{ choice }}" id="{{ choice }}"> <span>{{
-                                    choice }}</span>
-                            </label>
+                            <li class="list-group-item">
+                                    <input type="checkbox" class="form-check-input" name="{{ question['question'] }}"
+                                        value="{{ choice }}" id="{{ choice }}" visibility: hidden>
+                                    <label for="{{ choice }}">{{choice }}</label>
+                                    </input>
+                            </li>
                             {% endfor %}
-                        </div>
-                        <input type="hidden" name="first_modified_{{ question['question_id'] }}" id="first_modified_{{ question['question_id'] }}" value="{{ current_timestamp }}">
-                        <input type="hidden" name="last_modified_{{ question['question_id'] }}" id="last_modified_{{ question['question_id'] }}" value="{{ current_timestamp }}">
-                        {% endfor %}
+                        </ul>
                     </div>
-                </div>
+                </li>
+                {% endfor %}
+            </ul>
+            
+            <div class="mt-4 text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-        </div>
-        <div class="mt-4">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+            </li>
         </form>
     </div>
 
-    <!-- Update the JavaScript code in your HTML template -->
+
     <script>
         $(document).ready(function () {
             $("input[type='checkbox']").change(function () {
+                // Toggle the selected-answer class when the checkbox changes
+                $(this).closest('li').toggleClass('selected-answer', this.checked);
+                
                 // Find the closest question div to the changed checkbox
                 var questionDiv = $(this).closest('.question');
 
