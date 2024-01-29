@@ -1,3 +1,25 @@
+I apologize for the confusion. It seems there was a mistake in my previous response. To read the `quiz_parameters.json` file correctly, you should load it in your Python script and pass it to the template as a variable. Here's how you can do it:
+
+1. In your `app.py` script, read the `quiz_parameters.json` file and pass the `passing_level` to the template:
+
+```python
+# ... (previous code)
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    # ... (previous code)
+
+    # Read passing level from quiz_parameters.json
+    with open('quiz_parameters.json', 'r') as params_file:
+        params = json.load(params_file)
+        passing_level = params.get('passing_level', 0.7)  # Default passing level to 0.7 if not specified
+
+    return render_template('result.html', score=score, total=len(selected_questions), results=results, passing_level=passing_level, selected_questions=selected_questions)
+```
+
+2. Modify your `result.html` template to use the `passing_level` variable:
+
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,3 +62,6 @@
     </div>
 </body>
 </html>
+```
+
+By loading the `passing_level` from `quiz_parameters.json` in your Python script and passing it as a variable to the template, you should no longer encounter the "TemplateNotFound" error.

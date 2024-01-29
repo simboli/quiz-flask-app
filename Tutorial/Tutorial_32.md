@@ -1,3 +1,6 @@
+To calculate and display whether the quiz is "Passed!" or "Not passed" based on the `passing_level` read from the `quiz_parameters.json` file, you can modify the `result.html` template as follows:
+
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +14,10 @@
     <div class="container">
         <h1 class="mt-5">Quiz Result</h1>   
         <h2>Your score: {{ score }}/{{ total }}</h2>
+
+        {% with passing_level = 0.7 %} {# Default passing level if not specified #}
+        {% include 'quiz_parameters.json' %}
+        {% endwith %}
 
         {% if score/total >= passing_level %}
             <h3 class="text-success">Passed!</h3>
@@ -40,3 +47,12 @@
     </div>
 </body>
 </html>
+```
+
+In this modification:
+
+1. We calculate the `passing_level` from the `quiz_parameters.json` file and set a default value of 0.7 if not specified.
+2. We use an `{% if ... %}` statement to check if the score ratio is greater than or equal to the `passing_level`.
+3. Depending on the result, we display "Passed!" in green or "Not passed" in red.
+
+This modification will dynamically show the appropriate pass/fail message based on the `passing_level` defined in the `quiz_parameters.json` file.

@@ -28,13 +28,17 @@ with open('questions.json', 'r') as file:
     questions = json.load(file)
 
 # Function to select 2 random questions
-def select_random_questions(questions_list, num_questions=2):
+def select_random_questions(questions_list):
+    with open('quiz_parameters.json', 'r') as params_file:
+        params = json.load(params_file)
+        num_questions = params.get('num_questions', 2)  # Default to 2 questions if not specified
+
     return random.sample(questions_list, num_questions)
 
 @app.route('/')
 def index():
     # Select 2 random questions
-    selected_questions = select_random_questions(questions, num_questions=2)
+    selected_questions = select_random_questions(questions)
     session['current_questions'] = selected_questions
     session['session_id'] = generate_session_id()  # Generate a session ID
     session['page_load_time'] = datetime.now()  # Store the page load time
@@ -47,17 +51,21 @@ def generate_session_id():
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    # Read passing level from quiz_parameters.json
+    with open('quiz_parameters.json', 'r') as params_file:
+        params = json.load(params_file)
+        passing_level = params.get('passing_level', 0.7)  # Default passing level to 0.7 if not specified
+        num_questions = params.get('num_questions', 2)  # Default to 2 questions if not specified
+    
     score = 0
     results = []
     selected_questions = session.get('current_questions', [])
     question_number = 1  # Initialize the question number
 
     cursor = mysql.cursor()
-
-    # Save the session information to the database
     cursor.execute(
-        "INSERT INTO session_info (session_id, page_load_time, submission_time) VALUES (%s, %s, %s)",
-        (session.get('session_id'), session.get('page_load_time'), datetime.now())
+        "INSERT INTO session_info (session_id, page_load_time, submission_time, num_questions, passing_level) VALUES (%s, %s, %s, %s, %s)",
+        (session.get('session_id'), session.get('page_load_time'), datetime.now(), num_questions, passing_level)
     )
 
     for question in selected_questions:
@@ -69,7 +77,7 @@ def submit():
         # Save the quiz log for each selected answer with timestamp
         cursor.execute(
             "INSERT INTO quiz_log (session_id, question_number, question_id, question, user_answers, correct_answers, is_correct, answer_time, last_modified_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (session.get('session_id'), question_number, question['question_id'], question['question'], ', '.join(user_answers), ', '.join(correct_answers), is_correct, datetime.now(), request.form.get("last_modified_" + str(question['question_id'])))
+            (session.get('session_id'), question_number, question['question_id'], question['question'], '| '.join(user_answers), '| '.join(correct_answers), is_correct, datetime.now(), request.form.get("last_modified_" + str(question['question_id'])))
         )
 
         results.append({
@@ -89,7 +97,7 @@ def submit():
     mysql.commit()
     cursor.close()
 
-    return render_template('result.html', score=score, total=len(selected_questions), results=results, selected_questions=selected_questions)
+    return render_template('result.html', score=score, total=len(selected_questions), results=results, passing_level=passing_level, selected_questions=selected_questions)
 
 if __name__ == '__main__':
     app.run(debug=True)
