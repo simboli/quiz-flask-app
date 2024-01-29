@@ -11,8 +11,8 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="mt-5" aria-label="Quiz Results">Quiz Result</h1>
+    <div class="container-fluid">
+        <h1 class="mt-5" aria-label="Quiz Results">Quiz</h1>
         <div class="result-summary">
             <h2 aria-label="Number-questions">This test has {{ num_questions }} questions</h2>
         </div>
@@ -31,9 +31,9 @@
                         <ul class="answer-list">
                             {% for choice in question['choices'] %}
                             <li class="list-group-item">
-                                    <input type="checkbox" class="form-check-input" name="{{ question['question'] }}"
-                                        value="{{ choice }}" id="{{ choice }}" visibility: hidden>
-                                    <label for="{{ choice }}">{{choice }}</label>
+                                <input type="checkbox" class="form-check-input" name="{{ question['question'] }}"
+                                value="{{ choice }}" id="{{ choice }}" style="display: none;">
+                            <label class="answer-text" for="{{ choice }}">{{ choice }}</label>
                                     </input>
                             </li>
                             {% endfor %}
