@@ -1,3 +1,6 @@
+To display the total number of questions in the quiz, you can use the `num_questions` variable from your Flask app in the `index.html` template. Here's how you can update the template to show the total number of questions:
+
+```html
 <!-- Update the index.html template -->
 <!DOCTYPE html>
 <html>
@@ -19,7 +22,7 @@
                     <div class="question bg-white p-3 border-bottom">
                         <div class="d-flex flex-row justify-content-between align-items-center mcq">
                             <h4>MCQ Quiz</h4>
-                            <span>{{ num_questions }} questions</span> <!-- Display total number of questions here -->
+                            <span>1 of {{ num_questions }}</span> <!-- Display total number of questions here -->
                         </div>
                         <form method="POST" action="/submit">
                             {% for question in questions %}
@@ -85,3 +88,6 @@
 </body>
 
 </html>
+```
+
+By adding `{{ num_questions }}` in the `<span>` element, it will display the total number of questions in your quiz as specified in your Flask app's `num_questions` variable.
