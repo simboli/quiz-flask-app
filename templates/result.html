@@ -26,8 +26,8 @@
                 <li class="list-group-item question-item">
                     <p class="question-text">{{ result['question'] }}</p>
                     <ul class="answer-list">
-                        <li class="list-group-item">Your Answer(s): {{ result['user_answers']|join(', ') }}</li>
-                        <li class="list-group-item">Correct Answer(s): {{ result['correct_answers']|join(', ') }}</li>
+                        <li class="list-group-item"><strong>Your Answer(s):</strong> {{ result['user_answers']|join(', ') }}</li>
+                        <li class="list-group-item"><strong>Answer(s):</strong> {{ result['correct_answers']|join(', ') }}</li>
                         {% if result['is_correct'] %}
                             <li class="list-group-item text-success">Correct <i class="fas fa-check"></i></li>
                         {% else %}
@@ -40,7 +40,6 @@
 
         <div class="action-buttons">
             <a href="/" class="btn btn-primary mt-4" aria-label="Take Quiz Again">Take Quiz Again</a>
-            <a href="/review" class="btn btn-info mt-4" aria-label="Review Material">Review Material</a>
         </div>
     </div>
 </body>
