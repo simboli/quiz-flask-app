@@ -2,7 +2,7 @@
 
 The Quiz App is an open-source web application built with Python and Flask that allows users to take quizzes and assess your knowledge. It's designed to be easy to use, customizable, and can be adapted for various educational or assessment purposes.
 
-![Quiz App Screenshot](link_to_screenshot.png)
+![Quiz App Screenshot 1](https://raw.githubusercontent.com/simboli/quiz-flask-app/main/screenshot/Screen_001.png)
 
 ## Introduction
 
