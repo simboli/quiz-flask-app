@@ -3,6 +3,7 @@
 The Quiz App is an open-source web application built with Python and Flask that allows users to take quizzes and assess your knowledge. It's designed to be easy to use, customizable, and can be adapted for various educational or assessment purposes.
 
 ![Screenshot 1](screenshot/Screen_001.png?raw=true "Screenshot 1")
+![Screenshot 2](screenshot/Screen_002.png?raw=true "Screenshot 2")
 
 ## Introduction
 
@@ -10,8 +11,7 @@ The Quiz App provides a user-friendly interface for creating and taking quizzes.
 
 ## Database Structure
 
-The Quiz App uses a MySQL database to store questions, quiz logs, and session information. Below are the descriptions of the fields in the main files and tables:
-
+The Quiz App uses a MySQL database and json files to store questions, quiz logs, and session information. Below are the descriptions of the fields in the main files and tables:
 
 ### Questions Table (file `questions.json`)
 
@@ -19,6 +19,8 @@ The Quiz App uses a MySQL database to store questions, quiz logs, and session in
 - `question`: The actual quiz question.
 - `correct_answers`: Comma-separated list of correct answers.
 - `choices`: Comma-separated list of answer choices.
+
+![Screenshot 5](screenshot/Screen_005.png?raw=true "Screenshot 1")
 
 ### Parameter Table (file `quiz_parameters.json`)
 
@@ -39,6 +41,8 @@ The Quiz App uses a MySQL database to store questions, quiz logs, and session in
 - `first_modified_time`: Timestamp of the first modification to the question.
 - `last_modified_time`: Timestamp of the last modification to the question.
 
+![Screenshot 4](screenshot/Screen_001.png?raw=true "Screenshot 4")
+
 ### Session Info Table
 
 - `session_id` (Primary Key): Unique identifier for each quiz session.
@@ -46,6 +50,8 @@ The Quiz App uses a MySQL database to store questions, quiz logs, and session in
 - `submission_time`: Timestamp when the user submitted the quiz.
 - `num_questions`: Number of questions in the quiz session.
 - `passing_level`: The passing score required to pass the quiz.
+
+![Screenshot 3](screenshot/Screen_001.png?raw=true "Screenshot 3")
 
 ## Python Module Dependencies
 
