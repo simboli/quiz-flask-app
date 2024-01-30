@@ -47,9 +47,10 @@ def index():
     with open('quiz_parameters.json', 'r') as params_file:
         params = json.load(params_file)
         num_questions = params.get('num_questions', 2)  # Default to 2 questions if not specified
+        quiz_title =  params.get('quiz_title', 'Quiz')  # Blank if not specified
 
     # Pass the num_questions variable to the template
-    return render_template('index.html', questions=selected_questions, num_questions=num_questions)
+    return render_template('index.html', questions=selected_questions, num_questions=num_questions, quiz_title=quiz_title)
 
 # Function to generate a unique session ID
 def generate_session_id():
@@ -94,7 +95,7 @@ def submit():
 
         # Save the quiz log for each selected answer with timestamp
         query = '''INSERT INTO quiz_log (session_id, question_number, question_id, question, user_answers, correct_answers, is_correct, first_modified_time, last_modified_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'''
-        cursor.execute(query, (session.get('session_id'), question_number, question['question_id'], question['question'], '| '.join(user_answers), '| '.join(correct_answers), is_correct, first_modified_time, last_modified_time))
+        cursor.execute(query, (session.get('session_id'), question_number, question['question_id'], question['question'], '|'.join(user_answers), '|'.join(correct_answers), is_correct, first_modified_time, last_modified_time))
 
         results.append({
             'question_id': question['question_id'],

@@ -2,7 +2,8 @@
 <html>
 
 <head>
-    <title>Quiz App</title>
+    <title>{{ quiz_title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -12,9 +13,11 @@
 
 <body>
     <div class="container-fluid">
-        <h1 class="mt-5" aria-label="Quiz Results">Quiz</h1>
+        <h1 class="mt-5" aria-label="Quiz Results">{{ quiz_title }}</h1>
         <div class="result-summary">
-            <h2 aria-label="Number-questions">This test has {{ num_questions }} questions</h2>
+            <h2 aria-label="Number-questions">
+                This test has {{ num_questions }} {{ 'question' if num_questions == 1 else 'questions' }}
+            </h2>
         </div>
         <h3 aria-label="Questions">Questions:</h3>
 
@@ -32,9 +35,11 @@
                             {% for choice in question['choices'] %}
                             <li class="list-group-item">
                                 <input type="checkbox" class="form-check-input" name="{{ question['question'] }}"
-                                value="{{ choice }}" id="{{ choice }}" style="display: none;">
-                            <label class="answer-text" for="{{ choice }}">{{ choice }}</label>
-                                    </input>
+                                    value="{{ choice }}" id="{{ question['question_id'] }}_{{ choice }}"
+                                    style="display: none;">
+                                <label class="answer-text" for="{{ question['question_id'] }}_{{ choice }}">{{ choice
+                                    }}</label>
+                                </input>
                             </li>
                             {% endfor %}
                         </ul>
@@ -42,7 +47,7 @@
                 </li>
                 {% endfor %}
             </ul>
-            
+
             <div class="mt-4 text-center">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
@@ -56,7 +61,7 @@
             $("input[type='checkbox']").change(function () {
                 // Toggle the selected-answer class when the checkbox changes
                 $(this).closest('li').toggleClass('selected-answer', this.checked);
-                
+
                 // Find the closest question div to the changed checkbox
                 var questionDiv = $(this).closest('.question');
 

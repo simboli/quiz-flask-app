@@ -19,16 +19,9 @@
     },
     {
         "question_id": 4,
-        "question": "Snowflake provides a mechanism for its customers to override its natural clustering algorithms. This method is:",
-        "choices": ["Micro-partitions", "Clustering keys", "Key partitions", "Clustered partitions"],
-        "correct_answers": ["Clustering keys"]
-        
-    },
-    {
-        "question_id": 5,
-        "question": "Which are the best animals in the world?",
-        "choices": ["Cats", "Dogs", "Mouses"],
-        "correct_answers": ["Cats"]
+        "question": "What are NOT the primary colors?",
+        "choices": ["Red", "Green", "Pink", "Yellow", "Brown"],
+        "correct_answers": ["Pink", "Green", "Brown"]
         
     }
 
