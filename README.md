@@ -20,13 +20,15 @@ The Quiz App uses a MySQL database and json files to store questions, quiz logs,
 - `correct_answers`: Comma-separated list of correct answers.
 - `choices`: Comma-separated list of answer choices.
 
-![Screenshot 5](screenshot/Screen_005.png?raw=true "Screenshot 1")
+![Screenshot 5](screenshot/Screen_005.png?raw=true "Screenshot 5")
 
 ### Parameter Table (file `quiz_parameters.json`)
 
 - `num_questions`: Number of question of each takes.
 - `passing_level`: The actual passing level.
 - `quiz_title`: The title of the quiz, it will be printed on the top of the quiz page.
+
+![Screenshot 6](screenshot/Screen_006.png?raw=true "Screenshot 6")
 
 ### Quiz Log Table
 
@@ -41,7 +43,7 @@ The Quiz App uses a MySQL database and json files to store questions, quiz logs,
 - `first_modified_time`: Timestamp of the first modification to the question.
 - `last_modified_time`: Timestamp of the last modification to the question.
 
-![Screenshot 4](screenshot/Screen_001.png?raw=true "Screenshot 4")
+![Screenshot 4](screenshot/Screen_004.png?raw=true "Screenshot 4")
 
 ### Session Info Table
 
@@ -51,7 +53,7 @@ The Quiz App uses a MySQL database and json files to store questions, quiz logs,
 - `num_questions`: Number of questions in the quiz session.
 - `passing_level`: The passing score required to pass the quiz.
 
-![Screenshot 3](screenshot/Screen_001.png?raw=true "Screenshot 3")
+![Screenshot 3](screenshot/Screen_005.png?raw=true "Screenshot 3")
 
 ## Python Module Dependencies
 
