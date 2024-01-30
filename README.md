@@ -53,7 +53,7 @@ The Quiz App uses a MySQL database and json files to store questions, quiz logs,
 - `num_questions`: Number of questions in the quiz session.
 - `passing_level`: The passing score required to pass the quiz.
 
-![Screenshot 3](screenshot/Screen_005.png?raw=true "Screenshot 3")
+![Screenshot 3](screenshot/Screen_003.png?raw=true "Screenshot 3")
 
 ## Python Module Dependencies
 
