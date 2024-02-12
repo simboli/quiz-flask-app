@@ -1,0 +1,28 @@
+[
+    {
+        "question_id": 1,
+        "question": "What is the capital of France?",
+        "choices": ["London", "Berlin", "Paris", "Madrid"],
+        "correct_answers": ["Paris"]
+    },
+    {
+        "question_id": 2,
+        "question": "Which planets are known as the Gas Giants?",
+        "choices": ["Mars", "Venus", "Jupiter", "Saturn"],
+        "correct_answers": ["Jupiter", "Saturn"]
+    },
+    {
+        "question_id": 3,
+        "question": "What are the primary colors?",
+        "choices": ["Red", "Green", "Blue", "Yellow"],
+        "correct_answers": ["Red", "Blue", "Yellow"]
+    },
+    {
+        "question_id": 4,
+        "question": "What are NOT the primary colors?",
+        "choices": ["Red", "Green", "Pink", "Yellow", "Brown"],
+        "correct_answers": ["Pink", "Green", "Brown"]
+        
+    }
+
+]
