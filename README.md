@@ -165,6 +165,8 @@ Here are some enhancements and features that can be added to the Flask Quiz App 
 
 10. **User Feedback:** Collect user feedback and suggestions for continuous improvement.
 
+11. **Multi database connections:** the possibility to use it with databases like SQLite, PostgreSQL, ...
+
 We welcome contributions from the open-source community to help implement these enhancements and make the Flask Quiz App even better!
 
 ## License
